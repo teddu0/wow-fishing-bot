@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling>=1.26,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wow-fishing-bot"
+version = "0.1.0"
+description = "Screenshot fishing assistant for a visible WoW 3.3.5a window"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "numpy>=2.1,<3",
+  "opencv-python>=4.10,<5",
+  "PySide6>=6.8,<7",
+  "pytesseract>=0.3.13,<0.4",
+  "dxcam==0.3.0; sys_platform == 'win32'",
+  "pywin32>=308; sys_platform == 'win32'",
+  "pynput>=1.7.7,<2; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3,<10", "ruff>=0.11,<1"]
+
+[project.scripts]
+wow-fishing = "wow_fishing.app:main"
+wow-fishing-replay = "wow_fishing.replay:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wow_fishing"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+extend-exclude = [".bootstrap", ".python", ".uv-cache", "artifacts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
